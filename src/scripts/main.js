@@ -3,30 +3,27 @@
 // Select the logo element
 const logo = document.querySelector('.logo');
 
-// Create a new promise (renamed to clickPromise for clarity)
 const clickPromise = new Promise((resolve, reject) => {
-  logo.addEventListener('click', () => {
-    resolve('Promise was resolved!');
-  });
-
-  setTimeout(() => {
-    // eslint-disable-next-line prefer-promise-reject-errors
+  const timeoutId = setTimeout(() => {
     reject('Promise was rejected!');
   }, 3000);
+
+  logo.addEventListener('click', () => {
+    resolve('Promise was resolved!');
+    clearTimeout(timeoutId);
+  });
 });
 
-// Create and append a div to the body
-const div = document.createElement('div');
+const messageDiv = document.createElement('div');
 
-document.body.append(div);
+document.body.append(messageDiv);
 
-// Handle the promise resolution or rejection
 clickPromise
   .then((message) => {
-    div.classList.add('message');
-    div.textContent = message;
+    messageDiv.classList.add('message');
+    messageDiv.textContent = message;
   })
   .catch((errorMessage) => {
-    div.classList.add('message', 'error-message');
-    div.textContent = errorMessage;
+    messageDiv.classList.add('message', 'error-message');
+    messageDiv.textContent = errorMessage;
   });

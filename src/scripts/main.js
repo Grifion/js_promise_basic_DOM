@@ -1,8 +1,10 @@
 'use strict';
 
+// Select the logo element
 const logo = document.querySelector('.logo');
 
-const clickPromis = new Promise((resolve, reject) => {
+// Create a new promise (renamed to clickPromise for clarity)
+const clickPromise = new Promise((resolve, reject) => {
   logo.addEventListener('click', () => {
     resolve('Promise was resolved!');
   });
@@ -13,11 +15,13 @@ const clickPromis = new Promise((resolve, reject) => {
   }, 3000);
 });
 
+// Create and append a div to the body
 const div = document.createElement('div');
 
 document.body.append(div);
 
-clickPromis
+// Handle the promise resolution or rejection
+clickPromise
   .then((message) => {
     div.classList.add('message');
     div.textContent = message;
